@@ -17,8 +17,9 @@ namespace CurrencyExchangeApi.AutoMapper
             var configuration = new MapperConfiguration(cfg => {
                 GeneralConfiguration(cfg);
 
-                cfg.CreateMap<ConvertResponse, Quote>().ReverseMap();
-                cfg.CreateMap<ConvertResponse, Quote>().ReverseMap();
+                cfg.CreateMap<ExchangeRateResponse, Quote>().ReverseMap();
+                cfg.CreateMap<Quote, ConvertResponse>()
+                    .ForMember(dest => dest.From, opts => opts.MapFrom(src => src.Base));
 
             });
             return configuration;

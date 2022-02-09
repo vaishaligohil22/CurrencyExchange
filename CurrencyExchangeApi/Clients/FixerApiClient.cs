@@ -16,7 +16,6 @@ namespace CurrencyExchangeApi.Clients
         {
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri("http://data.fixer.io/api/");
-
             _config = config;
         }
 

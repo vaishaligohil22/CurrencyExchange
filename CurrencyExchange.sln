@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyExchange", "CurrencyExchange\CurrencyExchange.csproj", "{2DCCC721-5F56-4C9E-9354-B7C968491155}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyExchangeApi", "CurrencyExchangeApi\CurrencyExchangeApi.csproj", "{411F08E3-D517-44CF-8424-177F2204E9BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CurrencyExchangeApi", "CurrencyExchangeApi\CurrencyExchangeApi.csproj", "{411F08E3-D517-44CF-8424-177F2204E9BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrecyExchangeDB", "CurrecyExchangeDB\CurrecyExchangeDB.csproj", "{7E5B4D2C-D9DD-4F2B-A9C3-8D8BAE0B01B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{411F08E3-D517-44CF-8424-177F2204E9BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{411F08E3-D517-44CF-8424-177F2204E9BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{411F08E3-D517-44CF-8424-177F2204E9BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E5B4D2C-D9DD-4F2B-A9C3-8D8BAE0B01B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E5B4D2C-D9DD-4F2B-A9C3-8D8BAE0B01B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E5B4D2C-D9DD-4F2B-A9C3-8D8BAE0B01B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E5B4D2C-D9DD-4F2B-A9C3-8D8BAE0B01B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

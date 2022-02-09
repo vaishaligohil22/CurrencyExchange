@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CurrencyExchangeApi.Clients;
 using CurrencyExchangeApi.Models;
+using CurrencyExchangeApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,33 +18,23 @@ namespace CurrencyExchangeApi.Controllers
     [Route("api/[controller]")]
     public class ExchangeRateController : ControllerBase
     {
-        private readonly ILogger<ExchangeRateController> _logger;
-        private readonly FixerApiClient _fixerClient;
-        private readonly IMapper _mapper;
+        private readonly IExchangeRateService _exchangeRateService;
 
-        public ExchangeRateController(ILogger<ExchangeRateController> logger, FixerApiClient fixerClient, IMapper mapper)
+        public ExchangeRateController(IExchangeRateService exchangeRateService)
         {
-            _logger = logger;
-            _fixerClient = fixerClient;
-            _mapper = mapper;
+            _exchangeRateService = exchangeRateService;
         }
 
-        [HttpGet("symbol")]
+        [HttpGet("GetSymbol")]
         public async Task<Symbol> Get()
         {
-            return await _fixerClient.GetAsync();
+            return await _exchangeRateService.GetSymbolAsync();
         }
 
-        [HttpGet("latest")]
-        public async Task<ConvertResponse> GetLatest([FromQuery]string from, [FromQuery]string to)
+        [HttpGet("GetExchangeRate")]
+        public async Task<ExchangeRateResponse> GetExchangeRate([FromQuery]ExchangeRateRequest request)
         {
-            return _mapper.Map<ConvertResponse>(await _fixerClient.GetAsync(from, to));
-        }
-
-        [HttpGet("historical")]
-        public async Task<ConvertResponse> GetHistorical([FromQuery]string from, [FromQuery]string to, [FromQuery]DateTime date)
-        {
-            return _mapper.Map<ConvertResponse>(await _fixerClient.GetAsync(from, to, date));
+            return await _exchangeRateService.GetRateAsync(request);
         }
     }
 }

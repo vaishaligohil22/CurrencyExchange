@@ -1,4 +1,5 @@
 using CurrencyExchangeApi.Clients;
+using CurrencyExchangeApi.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,6 +28,8 @@ namespace CurrencyExchangeApi
             var mapper = AutoMapper.AutoMapperConfiguration.Configure();
             services.AddSingleton(mapper);
 
+            services.AddTransient<IExchangeRateService, ExchangeRateService>();
+            services.AddTransient<IConvertService, ConvertService>();
             services.AddScoped<IUserService, UserService>();
             services.AddHttpClient<FixerApiClient>();
 

@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 
 namespace CurrencyExchangeApi.Models
 {
-    public class ConvertRequest
+    public class ExchangeRateRequest
     {
         public string From { get; set; }
         public string To { get; set; }
-        public decimal Amount { get; set; }
         public DateTime? Date { get; set; }
     }
 }

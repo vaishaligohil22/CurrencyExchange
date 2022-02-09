@@ -12,6 +12,7 @@ namespace CurrencyExchange
     class Program
     {
         private static readonly HttpClient client = new HttpClient();
+
         static void Main(string[] args)
         {
             string from, to = "";
