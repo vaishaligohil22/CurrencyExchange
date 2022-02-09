@@ -63,7 +63,7 @@ namespace CurrencyExchange
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
                                         Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(string.Format("{0}:{1}", "admin", "Pa$$WoRd"))));
 
-            var url = $"https://currencyrateapi.azurewebsites.net/api/ExchangeRate/latest?from={from}&to={to}";
+            var url = $"https://currencyrateapi.azurewebsites.net/api/ExchangeRate/GetExchangeRate?from={from}&to={to}";
 
             if (date != null)
             {

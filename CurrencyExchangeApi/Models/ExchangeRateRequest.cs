@@ -1,14 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace CurrencyExchangeApi.Models
 {
     public class ExchangeRateRequest
     {
-        public string From { get; set; }
-        public string To { get; set; }
+        [EnumDataType(typeof(CurrencyCode))]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public CurrencyCode From { get; set; }
+
+        [EnumDataType(typeof(CurrencyCode))]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public CurrencyCode To { get; set; }
         public DateTime? Date { get; set; }
     }
 }

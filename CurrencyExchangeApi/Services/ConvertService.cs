@@ -15,11 +15,11 @@ namespace CurrencyExchangeApi.Services
     }
     public class ConvertService : IConvertService
     {
-        private readonly FixerApiClient _fixerClient;
+        private readonly IFixerApiClient _fixerClient;
         private readonly IMapper _mapper;
         private readonly ILogger<ConvertService> _logger;
 
-        public ConvertService(FixerApiClient fixerClient, IMapper mapper, ILogger<ConvertService> logger)
+        public ConvertService(IFixerApiClient fixerClient, IMapper mapper, ILogger<ConvertService> logger)
         {
             _fixerClient = fixerClient;
             _mapper = mapper;
@@ -28,15 +28,15 @@ namespace CurrencyExchangeApi.Services
 
         public async Task<ConvertResponse> GetConcersionAsync(ConvertRequest request)
         {
-            var result = await _fixerClient.GetAsync(request.From, request.To, request.Date);
+            var result = await _fixerClient.GetAsync(request.From.ToString(), request.To.ToString(), request.Date);
 
             var convertResponse = _mapper.Map<ConvertResponse>(result);
 
             if (result.Success)
             {
-                convertResponse.To = request.To;
+                convertResponse.To = request.To.ToString();
                 convertResponse.Amount = request.Amount;
-                convertResponse.Rate = result.Rates[request.To];
+                convertResponse.Rate = result.Rates[request.To.ToString()];
                 convertResponse.FinalAmount = result.Rates[request.To.ToString()] * request.Amount;
             }
 

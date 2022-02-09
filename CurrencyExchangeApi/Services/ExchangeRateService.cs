@@ -17,11 +17,11 @@ namespace CurrencyExchangeApi.Services
 
     public class ExchangeRateService : IExchangeRateService
     {
-        private readonly FixerApiClient _fixerClient;
+        private readonly IFixerApiClient _fixerClient;
         private readonly IMapper _mapper;
         private readonly ILogger<ExchangeRateService> _logger;
 
-        public ExchangeRateService(FixerApiClient fixerClient, IMapper mapper, ILogger<ExchangeRateService> logger)
+        public ExchangeRateService(IFixerApiClient fixerClient, IMapper mapper, ILogger<ExchangeRateService> logger)
         {
             _fixerClient = fixerClient;
             _mapper = mapper;
@@ -30,7 +30,9 @@ namespace CurrencyExchangeApi.Services
 
         public async Task<ExchangeRateResponse> GetRateAsync(ExchangeRateRequest request)
         {
-            return _mapper.Map<ExchangeRateResponse>(await _fixerClient.GetAsync(request.From, request.To, request.Date));
+            if(string.IsNullOrEmpty(request.From.ToString()) || string.IsNullOrEmpty(request.To.ToString()))
+                return null;
+            return _mapper.Map<ExchangeRateResponse>(await _fixerClient.GetAsync(request.From.ToString(), request.To.ToString(), request.Date));
         }
 
         public async Task<Symbol> GetSymbolAsync()

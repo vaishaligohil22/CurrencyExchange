@@ -1,15 +1,19 @@
+using CurrecyExchangeDB;
+using CurrecyExchangeDB.Models;
+using CurrecyExchangeDB.Repositories;
 using CurrencyExchangeApi.Clients;
+using CurrencyExchangeApi.Models;
 using CurrencyExchangeApi.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Reflection;
+using Newtonsoft.Json.Converters;
 
 namespace CurrencyExchangeApi
 {
@@ -28,10 +32,25 @@ namespace CurrencyExchangeApi
             var mapper = AutoMapper.AutoMapperConfiguration.Configure();
             services.AddSingleton(mapper);
 
+            services.AddHttpClient<IFixerApiClient, FixerApiClient>();
+
             services.AddTransient<IExchangeRateService, ExchangeRateService>();
+            services.AddTransient<IExchangeRateRepository, ExchangeRateRepository>();
             services.AddTransient<IConvertService, ConvertService>();
+            services.AddTransient<IInternalService, InternalService>();
+            services.AddTransient<ICurrencyRepository, CurrencyRepository>();
+
             services.AddScoped<IUserService, UserService>();
-            services.AddHttpClient<FixerApiClient>();
+
+            services.AddDbContext<ExchangeRateContext>(options => options.UseSqlServer("Data Source=NOOSL5V4Q4Y2;Initial Catalog=ExchangeRate;Integrated Security=True;"));
+            services.AddScoped<IExchangeRateFactory, ExchangeRateFactory>();
+
+            services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+            services.AddHttpContextAccessor();
+
+            services.AddControllers().AddNewtonsoftJson(options =>
+                     options.SerializerSettings.Converters.Add(new StringEnumConverter()));
 
             services.AddSwaggerGen(c =>
             {
@@ -60,13 +79,11 @@ namespace CurrencyExchangeApi
                             new string[] {}
                     }
                 });
-
             });
 
-            services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
-            services.AddHttpContextAccessor();
-            services.AddControllers();
+            services.AddSwaggerGenNewtonsoftSupport();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,7 +94,7 @@ namespace CurrencyExchangeApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSwagger();
+            app.UseSwagger(o => o.SerializeAsV2 = true);
 
             app.UseSwaggerUI(c =>
             {

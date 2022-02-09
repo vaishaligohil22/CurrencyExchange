@@ -1,13 +1,19 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CurrencyExchangeApi.Models;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace CurrencyExchangeApi.Clients
 {
-    public class FixerApiClient
+    public interface IFixerApiClient
+    {
+        Task<Symbol> GetAsync();
+        Task<ExchangeRateResponse> GetAsync(string from, string to, DateTime? date);
+    }
+
+    public class FixerApiClient : IFixerApiClient
     {
         private readonly HttpClient _httpClient;
         private readonly IConfiguration _config;
@@ -23,15 +29,10 @@ namespace CurrencyExchangeApi.Clients
         {
             return JsonConvert.DeserializeObject<Symbol>(await Request(null, null, null));
         }
-
-        public async Task<Quote> GetAsync(string from, string to)
+        
+        public async Task<ExchangeRateResponse> GetAsync(string from, string to, DateTime? date)
         {
-            return JsonConvert.DeserializeObject<Quote>(await Request(null, from, to));
-        }
-
-        public async Task<Quote> GetAsync(string from, string to, DateTime? date)
-        {
-            return JsonConvert.DeserializeObject<Quote>(await Request(date, from, to));
+            return JsonConvert.DeserializeObject<ExchangeRateResponse>(await Request(date, from, to));
         }
         
         private string PrepareRequest(DateTime? date, string? from, string? to)

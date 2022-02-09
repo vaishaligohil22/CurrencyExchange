@@ -26,15 +26,21 @@ namespace CurrencyExchangeApi.Controllers
         }
 
         [HttpGet("GetSymbol")]
-        public async Task<Symbol> Get()
+        public async Task<IActionResult> Get()
         {
-            return await _exchangeRateService.GetSymbolAsync();
+            var result = await _exchangeRateService.GetSymbolAsync();
+            return Ok(result);
         }
 
         [HttpGet("GetExchangeRate")]
-        public async Task<ExchangeRateResponse> GetExchangeRate([FromQuery]ExchangeRateRequest request)
+        public async Task<IActionResult> GetExchangeRate([FromQuery]ExchangeRateRequest request)
         {
-            return await _exchangeRateService.GetRateAsync(request);
+            var result = await _exchangeRateService.GetRateAsync(request);
+
+            if (result != null)
+                return Ok(result);
+            else
+                return BadRequest("Request is invalid");
         }
     }
 }
