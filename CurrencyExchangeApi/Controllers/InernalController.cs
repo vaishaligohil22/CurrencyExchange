@@ -38,9 +38,9 @@ namespace CurrencyExchangeApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetExchangeRate([FromQuery]ExchangeRateRequest request)
+        public async Task<IActionResult> GetExchangeRate([FromQuery]InternalRateRequest request)
         {
-            var result = await _internalService.GeAsync(request);
+            var result = await _internalService.GetAllAsync(request);
 
             if (result != null)
                 return Ok(result);

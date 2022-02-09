@@ -14,7 +14,7 @@ namespace CurrencyExchangeApi.Services
     public interface IInternalService
     {
         Task<ExchangeRate> AddLatestAsync(ExchangeRateRequest request);
-        Task<ApiCollection<ExchangeRateResponse>> GeAsync(ExchangeRateRequest request);
+        Task<ApiCollection<ExchangeRate>> GetAllAsync(InternalRateRequest request);
 
         //Task<ApiCollection<Currency>> AddCurrency();
     }
@@ -73,9 +73,11 @@ namespace CurrencyExchangeApi.Services
                 return null;
         }
 
-        public async Task<ApiCollection<ExchangeRateResponse>> GeAsync(ExchangeRateRequest request)
+        public async Task<ApiCollection<ExchangeRate>> GetAllAsync(InternalRateRequest req)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<ApiCollection<ExchangeRate>>(
+                await _exchangeRateRepository.GetAsync(req.From.ToString(), req.To.ToString(), req.FromDate, req.ToDate));
+            
         }
     }
 }

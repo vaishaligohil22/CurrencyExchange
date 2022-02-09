@@ -9,7 +9,7 @@ namespace CurrecyExchangeDB.Repositories
 {
     public interface IExchangeRateRepository
     {
-        Task<IEnumerable<ExchangeRate>> GetAsync();
+        Task<IEnumerable<ExchangeRate>> GetAsync(string from, string to, DateTime fromDate, DateTime toDate);
         Task<ExchangeRate> AddAsync(ExchangeRate exchangeRate);
     }
 
@@ -32,13 +32,15 @@ namespace CurrecyExchangeDB.Repositories
             return exchangeRate;
         }
 
-        public async Task<IEnumerable<ExchangeRate>> GetAsync()
+        public async Task<IEnumerable<ExchangeRate>> GetAsync(string from, string to, DateTime fromDate, DateTime toDate)
         {
             using (var ctx = _exchangeRateFactory.ReadOnly())
             {
-                var query = ctx.ExchangeRates.AsQueryable();
-
-                //query += query.Where(r => r.Date > )
+                var query = ctx.ExchangeRates.Where(
+                                        (r) => r.CurrFrom == from
+                                                && r.CurrTo == to
+                                                && r.Date >= fromDate && r.Date <= toDate
+                                       ).AsQueryable();
 
                 return await query
                     .OrderByDescending(m => m.Id)
