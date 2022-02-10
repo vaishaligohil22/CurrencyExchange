@@ -31,9 +31,20 @@ namespace CurrencyExchange
             amount = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("\n");
 
-            Console.WriteLine("Insert Date:");
-            date = Convert.ToDateTime(Console.ReadLine());
+
+            string condition = "";
+            Console.WriteLine("Do you want to see date specific rate, Y or N?");
+            condition =Console.ReadLine();
             Console.WriteLine("\n");
+
+            bool dateSpecific = (condition == "Y" ? true : false);
+
+            if (dateSpecific)
+            {
+                Console.WriteLine("Insert Date:");
+                date = Convert.ToDateTime(Console.ReadLine());
+                Console.WriteLine("\n");
+            }          
 
             var t = CallExchangeApi(from, to, date, amount);
             t.Wait();
