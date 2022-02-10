@@ -6,18 +6,22 @@ import { AppComponent } from './app.component';
 import { ExchangerateComponent } from './component/exchangerate/exchangerate.component';
 import { FormsModule } from '@angular/forms';
 import { FixerHttpClient } from './clients/fixer.httpclient';
+import { ChartComponent } from './component/chart/chart.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ExchangerateComponent
+    ExchangerateComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [
+    DatePipe,
     FixerHttpClient,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],

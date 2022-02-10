@@ -10,7 +10,7 @@ export class FixerService {
 
   constructor(private httpClient: FixerHttpClient) { }
 
-  getRate(from: string, to: string, date: Date): Observable<IExchangeRate> {
+  getRate(from: string, to: string, date: string): Observable<IExchangeRate> {
     return this.httpClient.get(`ExchangeRate/GetExchangeRate?From=${from}&To=${to}&Date=${date}`);
   }
 }

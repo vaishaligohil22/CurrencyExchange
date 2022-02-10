@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FixerService } from 'src/app/services/fixer.service';
 
@@ -9,11 +10,11 @@ import { FixerService } from 'src/app/services/fixer.service';
 export class ExchangerateComponent implements OnInit {
   from: string = '';
   to: string = '';
-  date = new Date();
+  date = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
   amount: number = 0;
   message: string = '';
 
-  constructor(private fixerService: FixerService) { }
+  constructor(private fixerService: FixerService, public datepipe: DatePipe) { }
 
   ngOnInit(): void { }
 
@@ -22,12 +23,12 @@ export class ExchangerateComponent implements OnInit {
       (data) => {
         if (data.success) {
           let finalAmount = data.rates[this.to] * this.amount;
-          alert(`${this.from} to ${this.to} for amount ${this.amount} = ${finalAmount}`);
+          this.message = `${this.from} to ${this.to} for amount ${this.amount} = ${finalAmount}`;
         }
         else
-          alert("Unsuccessful");
+          this.message = "Unsuccessful";
       }, (error) => {
-        console.log(error);
+        this.message = error;
       });
   }
 }
