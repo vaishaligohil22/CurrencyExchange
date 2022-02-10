@@ -42,7 +42,7 @@ namespace CurrencyExchangeApi
 
             services.AddScoped<IUserService, UserService>();
 
-            services.AddDbContext<ExchangeRateContext>(options => options.UseSqlServer("Data Source=NOOSL5V4Q4Y2;Initial Catalog=ExchangeRate;Integrated Security=True;"));
+            services.AddDbContext<ExchangeRateContext>(options => options.UseSqlServer(Configuration.GetConnectionString("CurrencyDatabase")));
             services.AddScoped<IExchangeRateFactory, ExchangeRateFactory>();
 
             services.AddAuthentication("BasicAuthentication").AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
@@ -51,6 +51,8 @@ namespace CurrencyExchangeApi
 
             services.AddControllers().AddNewtonsoftJson(options =>
                      options.SerializerSettings.Converters.Add(new StringEnumConverter()));
+
+            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
             services.AddSwaggerGen(c =>
             {
@@ -102,6 +104,8 @@ namespace CurrencyExchangeApi
             });
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAll");
 
             app.UseRouting();
 
