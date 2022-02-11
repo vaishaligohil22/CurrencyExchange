@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { FixerHttpClient } from './clients/fixer.httpclient';
 import { ChartComponent } from './component/chart/chart.component';
 import { DatePipe } from '@angular/common';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { DatePipe } from '@angular/common';
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    ChartsModule
   ],
   providers: [
     DatePipe,

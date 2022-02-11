@@ -13,6 +13,8 @@ export class ExchangerateComponent implements OnInit {
   date = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
   amount: number = 0;
   message: string = '';
+  message1: string = '';
+  showchart: boolean = false;
 
   constructor(private fixerService: FixerService, public datepipe: DatePipe) { }
 
@@ -23,7 +25,8 @@ export class ExchangerateComponent implements OnInit {
       (data) => {
         if (data.success) {
           let finalAmount = data.rates[this.to] * this.amount;
-          this.message = `${this.from} to ${this.to} for amount ${this.amount} = ${finalAmount}`;
+          this.message = `1 ${this.from} = ${data.rates[this.to]} ${this.to}`
+          this.message1 = `${this.amount} ${this.from} =  ${finalAmount} ${this.to}`;
         }
         else
           this.message = "Unsuccessful";

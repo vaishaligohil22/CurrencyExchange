@@ -1,26 +1,35 @@
 <div class="container">
-  <h2>Currency Exchange</h2>
-  <form action="/action_page.php">
-    <div class="form-group">
-      <label for="from">Currency From:</label>
-      <input type="from" [(ngModel)]="from" class="form-control" id="from" placeholder="Enter from currency"
-        name="from">
-    </div>
-    <div class="form-group">
-      <label for="to">Currency To:</label>
-      <input type="to" [(ngModel)]="to" class="form-control" id="to" placeholder="Enter to currency" name="to">
-    </div>
-    <div class="form-group">
-      <label for="amount">Amount:</label>
-      <input type="amount" [(ngModel)]="amount" class="form-control" id="amount" placeholder="Enter amount"
-        name="amount">
-    </div>
-    <div class="form-group">
-      <label for="date">Date:</label>
-      <input type="date" [(ngModel)]="date" class="form-control" id="date" placeholder="Enter date" name="date">
-    </div>
-    <button type="button" (click)="GetRate()" class="btn btn-success">Get Rate</button>
+  <div class="row">
+    <div class="col-sm-6">
+      <h2>Currency Exchange</h2>
+      <form action="/action_page.php">
+        <div class="form-group">
+          <label for="from">Currency From:</label>
+          <input type="from" [(ngModel)]="from" class="form-control" id="from" placeholder="Enter from currency"
+            name="from">
+        </div>
+        <div class="form-group">
+          <label for="to">Currency To:</label>
+          <input type="to" [(ngModel)]="to" class="form-control" id="to" placeholder="Enter to currency" name="to">
+        </div>
+        <div class="form-group">
+          <label for="amount">Amount:</label>
+          <input type="amount" [(ngModel)]="amount" class="form-control" id="amount" placeholder="Enter amount"
+            name="amount">
+        </div>
+        <div class="form-group">
+          <label for="date">Date:</label>
+          <input type="date" [(ngModel)]="date" class="form-control" id="date" placeholder="Enter date" name="date">
+        </div>
+        <button type="button" (click)="GetRate()" class="btn btn-success">Get Rate</button>
 
-    <h4><span class="label label-default">{{message}}</span></h4>
-  </form>
+        <h4><span class="label label-default">{{message}}</span></h4>
+        <h4><span class="label label-default">{{message1}}</span></h4>
+      </form>
+    </div>
+    <div class="col-sm-6">
+      <h2>Currency Chart</h2>
+      <app-chart></app-chart>
+    </div>
+  </div>
 </div>

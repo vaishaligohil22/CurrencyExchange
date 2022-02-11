@@ -13,7 +13,7 @@ namespace CurrencyExchangeTF
     public static class CurrencyExchange
     {
         // {second=0} {minute=1} {hour=10} {day} {month} {day-of-week=(2=Tuesday)}
-        private const string TimerSchedule = "* * * 1 * *";
+        private const string TimerSchedule = "0 30 10 * * *";
         private static HttpClient _client = new HttpClient();
 
         [FunctionName("CurrencyExchange")]

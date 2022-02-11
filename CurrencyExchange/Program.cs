@@ -50,7 +50,6 @@ namespace CurrencyExchange
             t.Wait();
 
             Console.WriteLine(t.Result);
-
             Console.ReadLine();
         }
 
@@ -61,7 +60,10 @@ namespace CurrencyExchange
             if (result.Success)
             {
                 var finalAmount = result.Rates[to.ToString()] * amount;
-                return $"{from} to {to} for amount {amount} = {finalAmount}";
+
+                Console.WriteLine($"1 {from} = {result.Rates[to.ToString()]} {to}");
+                Console.WriteLine($"{amount} {from} = {finalAmount} {to}");
+                return "Successful";
             }
             else
                 return "Unsuccessful";
